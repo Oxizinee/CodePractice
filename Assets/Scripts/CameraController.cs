@@ -6,14 +6,14 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] private GameObject _player;
     [SerializeField] private float _moveSpeed = 3;
-    private Vector3 _followPosition;
+    private Vector3 _offset;
     void Start()
     {
-        _followPosition = _player.transform.position - transform.position;
+        _offset = _player.transform.position - transform.position;
     }
 
     void LateUpdate()
     {
-        transform.position = Vector3.MoveTowards(transform.position, _followPosition, Time.deltaTime * _moveSpeed);
+        transform.position = _player.transform.position - _offset;    
     }
 }

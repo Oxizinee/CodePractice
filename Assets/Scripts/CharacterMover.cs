@@ -25,7 +25,6 @@ public class CharacterMover : MonoBehaviour
         _rigidBody = GetComponent<Rigidbody>();
     }
 
-    
     void Update()
     {
         LookAtMousePos();
