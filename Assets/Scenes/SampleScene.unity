@@ -526,6 +526,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 7
+  _accelerationRate: 10
+  _deaccelerationRate: -4
+  vel: 0
   _rotateSpeed: 2.4
   _groundLayer:
     serializedVersion: 2
@@ -543,7 +546,7 @@ Rigidbody:
   m_GameObject: {fileID: 1379350325}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 0.14
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}

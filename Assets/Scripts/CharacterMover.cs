@@ -7,6 +7,10 @@ public class CharacterMover : MonoBehaviour
 {
     [Header("Move")]
     [SerializeField] private float _moveSpeed = 5;
+    [SerializeField] private float _accelerationRate = 5;
+    [SerializeField] private float _deaccelerationRate = 5;
+    private Vector3 _targetVelocity;
+    [SerializeField] private float DebugVel;
     [Space]
     [Header("Rotate")]
     [SerializeField] private float _rotateSpeed = 60;
@@ -37,11 +41,19 @@ public class CharacterMover : MonoBehaviour
 
         LookAtMousePos();
 
+        DebugVel = _rigidBody.velocity.magnitude;
+
         if (Input.GetAxis("Vertical") > 0 && IsGrounded())
         {
-            _rigidBody.velocity = new Vector3(transform.forward.x * _moveSpeed, _rigidBody.velocity.y, transform.forward.z * _moveSpeed);
+            _targetVelocity = transform.forward * _moveSpeed;
         }
 
+        if (IsGrounded()) // apply drag on the ground
+        {
+            _targetVelocity *= (1 - Time.deltaTime * _rigidBody.drag);
+        }
+     
+    
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
             _shouldJump = true;
@@ -53,8 +65,18 @@ public class CharacterMover : MonoBehaviour
         if (_shouldJump)
         {
             PerformJump();
-            _shouldJump=false;
+            _shouldJump = false;
         }
+
+        HandleGroundMovement();
+    }
+
+    private void HandleGroundMovement()
+    {
+        Vector3 newVelocity = Vector3.MoveTowards(new Vector3(_rigidBody.velocity.x, 0, _rigidBody.velocity.z), _targetVelocity,
+                                             (Input.GetAxis("Vertical") > 0 ? _accelerationRate : _deaccelerationRate) * Time.deltaTime);
+
+        _rigidBody.velocity = new Vector3(newVelocity.x, _rigidBody.velocity.y, newVelocity.z);
     }
 
     private void PerformJump()
