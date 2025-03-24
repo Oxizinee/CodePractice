@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 using UnityEditor;
-using Unity.Burst.CompilerServices;
-using UnityEngine.SocialPlatforms.Impl;
 public class CharacterMover : MonoBehaviour
 {
     [Header("Move")]
@@ -84,7 +79,13 @@ public class CharacterMover : MonoBehaviour
         Quaternion targetRotation = _rigidBody.velocity.magnitude > _moveSpeed / 2 && Input.GetAxis("Vertical") > 0 ? AlignToGround() * objectRotation : AlignToGround();
 
         _armatureToTilt.transform.localRotation = Quaternion.Slerp(_armatureToTilt.transform.localRotation, targetRotation, 
-            (Input.GetAxis("Vertical") > 0 ? _tiltRotationSpeed : _tiltRotationBackUp) * Time.deltaTime) ;
+            (Input.GetAxis("Vertical") > 0 ? _tiltRotationSpeed : _tiltRotationBackUp) * Time.deltaTime);
+
+        Vector3 euler = _armatureToTilt.transform.eulerAngles;
+        if (euler.x > 180) euler.x -= 360;
+
+        _armatureToTilt.transform.localRotation = Quaternion.Euler(Mathf.Clamp(euler.x, _minMaxTiltAngle.x, _minMaxTiltAngle.y),
+            _armatureToTilt.transform.localEulerAngles.y, _armatureToTilt.transform.localEulerAngles.z);
     }
     private void FixedUpdate()
     {
