@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEditor;
+using Unity.Burst.CompilerServices;
+using UnityEngine.SocialPlatforms.Impl;
 public class CharacterMover : MonoBehaviour
 {
     [Header("Move")]
@@ -11,10 +13,17 @@ public class CharacterMover : MonoBehaviour
     [SerializeField] private float _deaccelerationRate = 5;
     private Vector3 _targetVelocity;
     [SerializeField] private float DebugVel;
+
     [Space]
     [Header("Rotate")]
     [SerializeField] private float _rotateSpeed = 60;
+    [SerializeField] private GameObject _armatureToTilt;
+    [Range(0,0.1f)]
+    [SerializeField] private float _tiltRotationSpeed = 1f;
+    [SerializeField] private float _tiltRotationBackUp = 1f;
+    [SerializeField] private Vector2 _minMaxTiltAngle = new Vector2(-90, 60);
     private RaycastHit _raycastMouseHit;
+
     [Space(10f)]
     [Header("Jump")]
     [SerializeField] LayerMask _groundLayer;
@@ -40,8 +49,10 @@ public class CharacterMover : MonoBehaviour
         _previousVelocity = _rigidBody.velocity;
 
         LookAtMousePos();
+        TiltRotation();
 
         DebugVel = _rigidBody.velocity.magnitude;
+
 
         if (Input.GetAxis("Vertical") > 0 && IsGrounded())
         {
@@ -60,6 +71,21 @@ public class CharacterMover : MonoBehaviour
         }
     }
 
+    private void TiltRotation()
+    {
+        Vector3 characterForward = _armatureToTilt.transform.forward;
+        Vector3 dragPoint = new Vector3(transform.position.x - (transform.forward.x * 1.5f), 1, transform.position.z - (transform.forward.z * 1.5f));
+        Vector3 dragObjectDirection = (dragPoint - transform.position).normalized;
+
+        float dot = Vector3.Dot(characterForward, dragObjectDirection);
+        float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
+
+        Quaternion objectRotation = Quaternion.Euler(angle * -1, 0, 0);
+        Quaternion targetRotation = _rigidBody.velocity.magnitude > _moveSpeed / 2 && Input.GetAxis("Vertical") > 0 ? AlignToGround() * objectRotation : AlignToGround();
+
+        _armatureToTilt.transform.localRotation = Quaternion.Slerp(_armatureToTilt.transform.localRotation, targetRotation, 
+            (Input.GetAxis("Vertical") > 0 ? _tiltRotationSpeed : _tiltRotationBackUp) * Time.deltaTime) ;
+    }
     private void FixedUpdate()
     {
         if (_shouldJump)
@@ -117,6 +143,17 @@ public class CharacterMover : MonoBehaviour
             }
         }
         return false;
+    }
+
+    private Quaternion AlignToGround()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, _groundCheckDistance, _groundLayer))
+        {
+            return Quaternion.FromToRotation(Vector3.up, hit.normal);
+        }
+
+        return Quaternion.identity;
     }
 
 }
