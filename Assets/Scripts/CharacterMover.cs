@@ -49,10 +49,10 @@ public class CharacterMover : MonoBehaviour
         DebugVel = _rigidBody.velocity.magnitude;
 
 
-        if (Input.GetAxis("Vertical") > 0 && IsGrounded())
-        {
-            _targetVelocity = transform.forward * _moveSpeed;
-        }
+        //if (Input.GetAxis("Vertical") > 0 && IsGrounded())
+        //{
+        //    _targetVelocity = transform.forward * _moveSpeed;
+        //}
 
         if (IsGrounded()) // apply drag on the ground
         {
@@ -64,8 +64,28 @@ public class CharacterMover : MonoBehaviour
         {
             _shouldJump = true;
         }
-    }
 
+        UpdateTargetVelocity();
+    }
+    private void UpdateTargetVelocity()
+    {
+        if (IsGrounded())
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out _raycastMouseHit, Mathf.Infinity, _groundLayer))
+            {
+                Vector3 targetPosition = _raycastMouseHit.point;
+                Vector3 direction = (targetPosition - transform.position).normalized;
+
+                float distance = Vector3.Distance(transform.position, targetPosition);
+
+                // Slow down as we approach the target point
+                float speedMultiplier = Mathf.Clamp01(distance / 5f); // Adjust "5f" to control the slowdown range
+
+                _targetVelocity = direction * _moveSpeed * speedMultiplier;
+            }
+        }
+    }
     private void TiltRotation()
     {
         float maxAngleNew = -_maxTiltAngle * _rigidBody.velocity.magnitude * _tiltRotationSpeed * 0.01f;
@@ -97,7 +117,7 @@ public class CharacterMover : MonoBehaviour
     private void HandleGroundMovement()
     {
         Vector3 newVelocity = Vector3.MoveTowards(new Vector3(_rigidBody.velocity.x, 0, _rigidBody.velocity.z), _targetVelocity,
-                                             (Input.GetAxis("Vertical") > 0 ? _accelerationRate : _deaccelerationRate) * Time.deltaTime);
+                                             (_targetVelocity.magnitude > 0 ?  _accelerationRate : _deaccelerationRate) * Time.deltaTime);//Input.GetAxis("Vertical") > 0 ? _accelerationRate : _deaccelerationRate) * Time.deltaTime);
 
         _rigidBody.velocity = new Vector3(newVelocity.x, _rigidBody.velocity.y, newVelocity.z);
     }
