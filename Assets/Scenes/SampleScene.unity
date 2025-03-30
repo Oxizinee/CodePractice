@@ -470,7 +470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 7
   _accelerationRate: 10
-  _deaccelerationRate: -4
+  _deaccelerationRate: 4
   DebugVel: 0
   _rotateSpeed: 2.4
   _armatureToTilt: {fileID: 1721786082}

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using DG.Tweening;
 public class CharacterMover : MonoBehaviour
 {
     [Header("Move")]
@@ -13,10 +14,9 @@ public class CharacterMover : MonoBehaviour
     [Header("Rotate")]
     [SerializeField] private float _rotateSpeed = 60;
     [SerializeField] private GameObject _armatureToTilt;
-    [Range(0,0.1f)]
-    [SerializeField] private float _tiltRotationSpeed = 1f;
-    [SerializeField] private float _tiltRotationBackUp = 1f;
-    [SerializeField] private Vector2 _minMaxTiltAngle = new Vector2(-90, 60);
+    [SerializeField] private float _tiltRotationSpeed;
+    [SerializeField] private float _tiltOnSlowDownMultiplier = 14;
+    [SerializeField] private float _maxTiltAngle = 45;
     private RaycastHit _raycastMouseHit;
 
     [Space(10f)]
@@ -68,25 +68,21 @@ public class CharacterMover : MonoBehaviour
 
     private void TiltRotation()
     {
-        Vector3 characterForward = _armatureToTilt.transform.forward;
-        Vector3 dragPoint = new Vector3(transform.position.x - (transform.forward.x * 1.5f), 1, transform.position.z - (transform.forward.z * 1.5f));
-        Vector3 dragObjectDirection = (dragPoint - transform.position).normalized;
+        float maxAngleNew = -_maxTiltAngle * _rigidBody.velocity.magnitude * _tiltRotationSpeed * 0.01f;
 
-        float dot = Vector3.Dot(characterForward, dragObjectDirection);
-        float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
+        if (maxAngleNew < -_maxTiltAngle)
+        {
+            maxAngleNew = -_maxTiltAngle;
+        }
 
-        Quaternion objectRotation = Quaternion.Euler(angle * -1, 0, 0);
-        Quaternion targetRotation = _rigidBody.velocity.magnitude > _moveSpeed / 2 && Input.GetAxis("Vertical") > 0 ? AlignToGround() * objectRotation : AlignToGround();
+        Quaternion targetRotation = AlignToGround() * Quaternion.Euler(maxAngleNew, 0, 0);
 
-        _armatureToTilt.transform.localRotation = Quaternion.Slerp(_armatureToTilt.transform.localRotation, targetRotation, 
-            (Input.GetAxis("Vertical") > 0 ? _tiltRotationSpeed : _tiltRotationBackUp) * Time.deltaTime);
-
-        Vector3 euler = _armatureToTilt.transform.eulerAngles;
-        if (euler.x > 180) euler.x -= 360;
-
-        _armatureToTilt.transform.localRotation = Quaternion.Euler(Mathf.Clamp(euler.x, _minMaxTiltAngle.x, _minMaxTiltAngle.y),
-            _armatureToTilt.transform.localEulerAngles.y, _armatureToTilt.transform.localEulerAngles.z);
+        _armatureToTilt.transform.localRotation = Quaternion.RotateTowards(
+                    _armatureToTilt.transform.localRotation, targetRotation,
+                    Input.GetAxis("Vertical") > 0 ? _rigidBody.velocity.magnitude * _tiltRotationSpeed * Time.deltaTime * 10f 
+                    : _rigidBody.velocity.magnitude * _tiltRotationSpeed * Time.deltaTime * _tiltOnSlowDownMultiplier);
     }
+
     private void FixedUpdate()
     {
         if (_shouldJump)
