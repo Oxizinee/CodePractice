@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2830000482546139650}
   - component: {fileID: 2913925490769290391}
   - component: {fileID: 387843005694570324}
-  - component: {fileID: 1004226236639678855}
+  - component: {fileID: 8991205640373684706}
   m_Layer: 0
   m_Name: Food
   m_TagString: Untagged
@@ -52,6 +52,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   isTouchingPan: 0
+  CookingValue: 0
+  ScaleWhenReady: 1.4
+  ScaleDuration: 1
 --- !u!33 &2830000482546139650
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -123,7 +126,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &1004226236639678855
+--- !u!54 &8991205640373684706
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

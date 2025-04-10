@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -13,6 +14,7 @@ public class PanController : MonoBehaviour
     Vector3 _originalPos;
     [Header("Rotate Pan")]
     [Space]
+    public bool _allowCameraTilt;
     public float _rotationSpeed = 30, _maxTiltAngle = 30;
     public Transform _panPivot;
     float _originalDistance, rotationSpeed;
@@ -29,8 +31,11 @@ public class PanController : MonoBehaviour
     [Header("FoodDetection")]
     public List<Rigidbody> FoodOnPan = new List<Rigidbody>();
 
-    [Header("MouseSwing")]
-    public float ForceToAdd = 10;
+    [Header("FoodOnPan")]
+    public float ForceToAdd = 1;
+    public float JumpTime = 1;
+    public float JumpEndPosAbove = 0.3f;
+    public Ease JumpEase = Ease.Linear;
 
     private void OnCollisionStay(Collision collision)
     {
@@ -70,17 +75,47 @@ public class PanController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            foreach (Rigidbody rb in FoodOnPan)
+           // AddForceToRb();
+           foreach (Rigidbody rb in FoodOnPan)
             {
-                rb.AddForceAtPosition(transform.up * ForceToAdd, rb.transform.localPosition, ForceMode.Impulse);
+                DG.Tweening.Sequence jumpAndFlip = DOTween.Sequence();
+                //rb.transform.DOJump(rb.transform.position + (Vector3.up * JumpEndPosAbove), ForceToAdd, 1, JumpTime, false)
+                //     .SetEase(JumpEase);
+                jumpAndFlip.Append(
+                    rb.transform.DOJump(
+                        rb.transform.position + (Vector3.up * JumpEndPosAbove),
+                        ForceToAdd,
+                        1,
+                        JumpTime,
+                        false
+                    ).SetEase(JumpEase)
+                );
+
+                jumpAndFlip.Join(
+                    rb.transform.DORotate(
+                        rb.transform.eulerAngles + new Vector3(180f, 0, 0f), 
+                        JumpTime,
+                        RotateMode.FastBeyond360
+                    ).SetEase(JumpEase)
+                );
             }
 
-            _isSwingingUp = true; // Start the swing!
-            Debug.Log("Force Added:" + transform.up * ForceToAdd);
+            _isSwingingUp = true;
+            Debug.Log("Force Added:" + transform.forward * ForceToAdd);
         }
 
         SwingPan();
 
+    }
+
+
+    private void AddForceToRb()
+    {
+        foreach (Rigidbody rb in FoodOnPan)
+        {
+            rb.AddForceAtPosition(transform.forward * ForceToAdd, rb.transform.localPosition, ForceMode.Impulse);
+            rb.transform.SetParent(null);
+        }
     }
 
     private void SwingPan()
@@ -108,10 +143,20 @@ public class PanController : MonoBehaviour
         float verticalOffset = localDirToMouse.y;
         float tiltAngle = Mathf.Clamp(verticalOffset * _rotationSpeed, -_maxTiltAngle, _maxTiltAngle);
 
+       
         rotationSpeed = _currentSwingAngle == 0 ? Mathf.Clamp(Vector3.Distance(worldMousePos, transform.position) * _rotationSpeed, 5f, 300f) 
             : swingSpeed;
 
-        Quaternion targetRotation = _currentSwingAngle == 0 ? Quaternion.Euler(-tiltAngle, 0f, 0f) : Quaternion.Euler(_currentSwingAngle, 0f, 0f);
+        Quaternion targetRotation;
+
+        if (_allowCameraTilt)
+        {
+            targetRotation = _currentSwingAngle == 0 ? Quaternion.Euler(-tiltAngle, 0f, 0f) : Quaternion.Euler(_currentSwingAngle, 0f, 0f);
+        }
+        else
+        {
+            targetRotation = Quaternion.Euler(_currentSwingAngle, 0f, 0f);
+        }
 
         _panPivot.transform.localRotation = Quaternion.RotateTowards(
             _panPivot.transform.localRotation,
