@@ -12,9 +12,9 @@ TagManager:
   - Water
   - UI
   - Pan
-  - 
-  - 
-  - 
+  - Inspector
+  - Office
+  - Customer
   - 
   - 
   - 
@@ -40,4 +40,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: text
+    uniqueID: 3052685415
     locked: 0
