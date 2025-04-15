@@ -1,22 +1,28 @@
 using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Linq;
-using UnityEngine.Events;
 
-
+[System.Serializable]
+public struct CitezenProfile
+{
+    public string Name;
+    public string Nationality;
+    public string Gender;
+    public string IDNumber;
+}
 
 public class Customer : MonoBehaviour, IPointerClickHandler
 {
+    [SerializeField] CitezenProfile profile;
     public Transform _talkingPosition;
     public int maxDocumentsToSpawn = 4;
     public float _walkAwayDistance = 10;
     public float _movementSpeed = 10, _positionToReachDistance = 0.05f;
     private bool _isWalkingAway;
 
-    public GameObject DocumentPrefab;
+    public GameObject[] DocumentPrefabs;
     private GameObject[] _allDocuments;
 
     public delegate void OnWalkAwayDelegate();
@@ -27,9 +33,7 @@ public class Customer : MonoBehaviour, IPointerClickHandler
 
     private SpriteRenderer _spriteRenderer;
     private Color _mainColor;
-    [Header("Customer Info")]
-   // [SerializeField] private Nationality _nationality;
-    [SerializeField]private int _gender; //0 - male, 1- female
+  
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -46,15 +50,11 @@ public class Customer : MonoBehaviour, IPointerClickHandler
 
     private void SetCustomerInfo()
     {
-        _gender = Random.Range(0, 2);
-        if (_gender == 0)
-        {
-            _mainColor = Color.blue;
-        }
-        else
-        {
-            _mainColor = Color.magenta;
-        }
+        float gender = Random.value;
+        _mainColor = gender < 0.5 ? Color.blue : Color.magenta;
+        profile.Gender = gender < 0.5 ? "M" : "F";
+        profile.Nationality = "Czebuka";
+        profile.Name = "John Kowalski";
         //_nationality = (Nationality)System.Enum.GetValues(typeof(Nationality)).GetValue(Random.Range(0, System.Enum.GetValues(typeof(Nationality)).Length));
 
     }
@@ -84,8 +84,8 @@ public class Customer : MonoBehaviour, IPointerClickHandler
         for (int i = 0; i < randomAmount; i++)
         {
             Vector3 spawnPos = new Vector3(transform.position.x + (i * _offsetBetweenDocuments), transform.position.y, transform.position.z);
-            GameObject Document = Instantiate(DocumentPrefab, spawnPos, Quaternion.identity, transform);
-            Document.GetComponent<Document>().SetDocument(/*_nationality.ToString()*/"nationality", _gender == 0 ? "Male" : "Female");
+            GameObject Document = Instantiate(DocumentPrefabs[0], spawnPos, Quaternion.identity, transform);
+            Document.GetComponent<PassportDocument>().CitezenProfile = profile;
             _allDocuments[i] = Document;
         }
 
@@ -108,14 +108,15 @@ public class Customer : MonoBehaviour, IPointerClickHandler
             _spriteRenderer.DOColor(Color.gray, ColorChangingDuration);
             yield return new WaitForSeconds(1);
 
+            OnWalkAway?.Invoke();
+
             while (Vector3.Distance(transform.position, targetPos) > _positionToReachDistance)
             {
                 transform.position = Vector3.MoveTowards(transform.position, targetPos, _movementSpeed * Time.deltaTime);
                 yield return null;
 
             }
-
-            OnWalkAway?.Invoke();
+           
             Destroy(gameObject);
         }
     }

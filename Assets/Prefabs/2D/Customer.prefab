@@ -98,12 +98,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 689e2b1a4f779f749b2fb1ffb499af99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  profile:
+    Name: 
+    Nationality: 
+    Gender: 
+    IDNumber: 
   _talkingPosition: {fileID: 0}
   maxDocumentsToSpawn: 4
   _walkAwayDistance: 20
   _movementSpeed: 5
   _positionToReachDistance: 0.05
-  DocumentPrefab: {fileID: 3380514827569175179, guid: afe6344322bc99b4088eb22879a274f8, type: 3}
+  DocumentPrefabs:
+  - {fileID: 3380514827569175179, guid: afe6344322bc99b4088eb22879a274f8, type: 3}
   ColorChangingDuration: 1
   _offsetBetweenDocuments: 1.5
   _documentYOffset: 2.5

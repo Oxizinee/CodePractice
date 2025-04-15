@@ -5,7 +5,10 @@
     {
       "ruleType": "BanOnCountry",
       "targetCountry": "Czebuka"
-    },
-    { "ruleType": "EntryPermitRequired" }
+    }
+  ],
+  "documents": [
+    "Passport",
+    "IDCard"
   ]
 }
