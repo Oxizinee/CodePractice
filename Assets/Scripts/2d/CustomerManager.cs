@@ -17,7 +17,8 @@ public class CustomerManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && _currentCustomer == null)
         {
             _currentCustomer = Instantiate(CustomerPrefab, transform.position, Quaternion.identity,transform);
-            _currentCustomer.GetComponent<Customer>().OnWalkAway += ClearCurrentCustomer;         
+            _currentCustomer.GetComponent<Customer>().OnWalkAway += ClearCurrentCustomer;
+            Debug.Log("New Customer incoming");
         }
     }
 

@@ -6,21 +6,7 @@ using UnityEngine.EventSystems;
 using System.Linq;
 using UnityEngine.Events;
 
-public enum Nationality
-{
-    Arabaska,
-    Czebuka
-}
 
-public enum Personality
-{
-
-}
-
-public interface IPersonality
-{
-
-}
 
 public class Customer : MonoBehaviour, IPointerClickHandler
 {
@@ -42,7 +28,7 @@ public class Customer : MonoBehaviour, IPointerClickHandler
     private SpriteRenderer _spriteRenderer;
     private Color _mainColor;
     [Header("Customer Info")]
-    [SerializeField] private Nationality _nationality;
+   // [SerializeField] private Nationality _nationality;
     [SerializeField]private int _gender; //0 - male, 1- female
 
     public void OnPointerClick(PointerEventData eventData)
@@ -69,7 +55,7 @@ public class Customer : MonoBehaviour, IPointerClickHandler
         {
             _mainColor = Color.magenta;
         }
-        _nationality = (Nationality)System.Enum.GetValues(typeof(Nationality)).GetValue(Random.Range(0, System.Enum.GetValues(typeof(Nationality)).Length));
+        //_nationality = (Nationality)System.Enum.GetValues(typeof(Nationality)).GetValue(Random.Range(0, System.Enum.GetValues(typeof(Nationality)).Length));
 
     }
 
@@ -99,7 +85,7 @@ public class Customer : MonoBehaviour, IPointerClickHandler
         {
             Vector3 spawnPos = new Vector3(transform.position.x + (i * _offsetBetweenDocuments), transform.position.y, transform.position.z);
             GameObject Document = Instantiate(DocumentPrefab, spawnPos, Quaternion.identity, transform);
-            Document.GetComponent<Document>().SetDocument(_nationality.ToString(), _gender == 0 ? "Male" : "Female");
+            Document.GetComponent<Document>().SetDocument(/*_nationality.ToString()*/"nationality", _gender == 0 ? "Male" : "Female");
             _allDocuments[i] = Document;
         }
 

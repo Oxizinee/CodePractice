@@ -1,0 +1,11 @@
+{
+  "dayNumber": 1,
+  "rules": [
+    { "ruleType": "MustHavePassport" },
+    {
+      "ruleType": "BanOnCountry",
+      "targetCountry": "Czebuka"
+    },
+    { "ruleType": "EntryPermitRequired" }
+  ]
+}
