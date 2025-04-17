@@ -102,14 +102,15 @@ MonoBehaviour:
     Name: 
     Nationality: 
     Gender: 
-    IDNumber: 
+    PassportNumber: 
   _talkingPosition: {fileID: 0}
-  maxDocumentsToSpawn: 4
+  maxDocumentsToSpawn: 3
   _walkAwayDistance: 20
   _movementSpeed: 5
   _positionToReachDistance: 0.05
   DocumentPrefabs:
   - {fileID: 3380514827569175179, guid: afe6344322bc99b4088eb22879a274f8, type: 3}
+  - {fileID: 3380514827569175179, guid: 61c4e28248a63f7498721e666d65c10d, type: 3}
   ColorChangingDuration: 1
   _offsetBetweenDocuments: 1.5
   _documentYOffset: 2.5

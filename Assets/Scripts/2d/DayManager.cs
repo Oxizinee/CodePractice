@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using Newtonsoft.Json;
+using System;
 
 public class DayManager : MonoBehaviour
 {
@@ -29,10 +30,11 @@ public class DayManager : MonoBehaviour
         {
             string json = File.ReadAllText(path);
             currentDayConfig = JsonConvert.DeserializeObject<DayConfigWrapper>(json).ToDayConfig();
-            Debug.Log($"Day {currentDayConfig.dayNumber} loaded correctly with {currentDayConfig.rules.Count} rules.");
-            foreach (Rule rule in currentDayConfig.rules)
+            Debug.Log($"Day {currentDayConfig.dayNumber} loaded correctly with {currentDayConfig.ruleData.Count} rules.");
+            foreach (RuleData rule in currentDayConfig.ruleData)
             {
                 Debug.Log(rule.ruleType);
+                currentDayConfig.rules.Add(CreateRuleFromData(rule));
             }
         }
         else
@@ -40,15 +42,33 @@ public class DayManager : MonoBehaviour
             Debug.Log($"Day config for {currentDay} not found");
         }
     }
-    
-   
+
+    public static Rule CreateRuleFromData(RuleData data)
+    {
+        switch (data.ruleType)
+        {
+            case RuleType.MustHavePassport:
+               return new MustHavePassportRule();
+
+            //case RuleType.BanOnCountry:
+            //    return new BanOnCountryRule(data.targetCountry);
+
+                // Add more cases here
+        }
+
+        throw new Exception($"Unknown rule type: {data.ruleType}");
+    }
+
 }
+
+
 [System.Serializable]
 public class DayConfig
 {
     public int dayNumber;
     //list of rules
-    public List<Rule> rules;
+    public List<RuleData> ruleData;
+    public List<Rule> rules = new List<Rule>();
     //list of events
     //list of special customers
 
@@ -59,14 +79,14 @@ public class DayConfig
 public class DayConfigWrapper
 {
     public int dayNumber;
-    public List<Rule> rules = new List<Rule>();
+    public List<RuleData> rules = new List<RuleData>();
     public List<DocumentType> documents = new List<DocumentType>();
     public DayConfig ToDayConfig()
     {
         return new DayConfig()
         {
             dayNumber = this.dayNumber,
-            rules = this.rules,
+            ruleData = this.rules,
             documents = this.documents
         };
     }

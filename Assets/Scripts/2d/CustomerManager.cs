@@ -6,10 +6,6 @@ public class CustomerManager : MonoBehaviour
 {
     public GameObject CustomerPrefab;
     [SerializeField]private GameObject _currentCustomer;
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()

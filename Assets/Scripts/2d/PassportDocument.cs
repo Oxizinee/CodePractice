@@ -5,36 +5,47 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static UnityEngine.RuleTile.TilingRuleOutput;
-
+public enum EntryStatus
+{
+    Unset,
+    Denied,
+    Aproved
+}
 public enum DocumentType
 {
     Passport,
-    IDCard,
-
+    EntryPermit
 }
 
 public abstract class Document : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     //in game representatives
     public DocumentType DocumentType;
-    public GameObject _officeVersion, _inspectorVersion;
+    [SerializeField] private GameObject _officeVersion, _inspectorVersion, _entryStamp;
    
-    public CitezenProfile CitezenProfile;
+    public CitizenProfile CitezenProfile;
     
     public Dictionary<string, string> Fields = new Dictionary<string, string>();
     
+    private EntryStatus _entryStatus;
 
     private float _dragSpeed, _giveBackOffset;
-    
     //dragging
-    private bool _isDragging, _canGiveBack;
+    private bool _isDragging, _hoveringAboveCitizen;
 
     //collision layers
     private int _officeLayerValue, _inspectorLayerValue, _customerLayerValue;
 
     public void Start()
     {
+        if (_entryStamp != null)
+        {
+            _entryStamp.SetActive(false);
+        }
+        else
+        {
+            _entryStatus = EntryStatus.Denied;
+        }
         _dragSpeed = 40;
         _giveBackOffset = 3;
 
@@ -50,9 +61,8 @@ public abstract class Document : MonoBehaviour, IDragHandler, IEndDragHandler
     }
 
     public virtual void SetTextOnDocument() { }
-    public Document(DocumentType documentType, CitezenProfile citezenProfile) 
+    public Document(CitizenProfile citezenProfile) 
     { 
-        DocumentType = documentType;
         CitezenProfile = citezenProfile;
     }
 
@@ -67,7 +77,7 @@ public abstract class Document : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         _isDragging = false;
 
-        if (_canGiveBack)
+        if (_hoveringAboveCitizen && _entryStatus != EntryStatus.Unset)
         {
             transform.DOMoveY(transform.position.y - _giveBackOffset, 0.5f).SetEase(Ease.Linear).OnComplete(() => gameObject.SetActive(false));
             Debug.Log("Gave it back!");
@@ -77,7 +87,7 @@ public abstract class Document : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         if (_isDragging && other.gameObject.layer == _customerLayerValue)
         {
-            _canGiveBack = true;
+            _hoveringAboveCitizen = true;
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -101,18 +111,37 @@ public abstract class Document : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         if (other.gameObject.layer == _customerLayerValue)
         {
-            _canGiveBack = false;
+            _hoveringAboveCitizen = false;
         }
+    }
+
+    public void SetEntryStatus(EntryStatus entryStatus, Sprite stampSprite, Color stampColor)
+    {
+        _entryStatus = entryStatus;
+        if (_entryStamp != null)
+        {
+            _entryStamp.SetActive(true);
+            _entryStamp.GetComponent<SpriteRenderer>().sprite = stampSprite;
+            _entryStamp.GetComponent<SpriteRenderer>().color = stampColor;
+        }
+        Debug.Log(gameObject.name + entryStatus.ToString());
+    }
+
+    public EntryStatus GetEntryStatus()
+    {
+        return _entryStatus;
     }
 }
 public class PassportDocument : Document
 {
-    public TextMeshPro _nameText, _nationalityText, _genderText;
-    public PassportDocument(DocumentType documentType, CitezenProfile citezenProfile) : base(documentType, citezenProfile)
+    [SerializeField] private TextMeshPro _nameText, _nationalityText, _genderText, _passportNumberText, _expirationDateText;
+    public PassportDocument(CitizenProfile citezenProfile) : base(citezenProfile)
     {
         Fields["Name"] = citezenProfile.Name;
         Fields["Nationality"] = citezenProfile.Nationality;
         Fields["Gender"] = citezenProfile.Gender;
+        Fields["PassportNumber"] = citezenProfile.PassportNumber;
+        Fields["ExpirationDate"] = citezenProfile.ExpirationDate.ToShortDateString();
     }
 
     public override void SetTextOnDocument()
@@ -120,6 +149,8 @@ public class PassportDocument : Document
         _nameText.text = CitezenProfile.Name;
         _nationalityText.text = CitezenProfile.Nationality;
         _genderText.text = CitezenProfile.Gender;
+        _passportNumberText.text = CitezenProfile.PassportNumber;
+        _expirationDateText.text = CitezenProfile.ExpirationDate.ToShortDateString();
     }
     
 

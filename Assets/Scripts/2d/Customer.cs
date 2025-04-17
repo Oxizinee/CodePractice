@@ -3,19 +3,21 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Linq;
+using System;
 
 [System.Serializable]
-public struct CitezenProfile
+public struct CitizenProfile
 {
     public string Name;
     public string Nationality;
     public string Gender;
-    public string IDNumber;
+    public string PassportNumber;
+    public DateTime ExpirationDate;
 }
 
 public class Customer : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] CitezenProfile profile;
+    [SerializeField] CitizenProfile profile;
     public Transform _talkingPosition;
     public int maxDocumentsToSpawn = 4;
     public float _walkAwayDistance = 10;
@@ -23,7 +25,7 @@ public class Customer : MonoBehaviour, IPointerClickHandler
     private bool _isWalkingAway;
 
     public GameObject[] DocumentPrefabs;
-    private GameObject[] _allDocuments;
+    private Document[] _allDocuments;
 
     public delegate void OnWalkAwayDelegate();
 
@@ -42,21 +44,31 @@ public class Customer : MonoBehaviour, IPointerClickHandler
 
     void Start()
     {
-        SetCustomerInfo();
+        GenerateCitizenInfo();
         _talkingPosition = GameObject.Find("TalkingPosition").transform;
         _spriteRenderer = GetComponent<SpriteRenderer>();
         StartCoroutine(WalkToWindow());
     }
 
-    private void SetCustomerInfo()
+    private void GenerateCitizenInfo()
     {
-        float gender = Random.value;
-        _mainColor = gender < 0.5 ? Color.blue : Color.magenta;
-        profile.Gender = gender < 0.5 ? "M" : "F";
+        float gender = UnityEngine.Random.value;
+        if(gender < 0.5f) 
+        {
+            _mainColor = Color.blue;
+            profile.Gender = "M";
+            profile.Name = "John Kowalski";
+            profile.PassportNumber = "E5SHM";
+        }
+        else
+        {
+            _mainColor = Color.magenta;
+            profile.Gender = "F";
+            profile.Name = "Eva Kowalska";
+            profile.PassportNumber = "E5SHF";
+        }
         profile.Nationality = "Czebuka";
-        profile.Name = "John Kowalski";
-        //_nationality = (Nationality)System.Enum.GetValues(typeof(Nationality)).GetValue(Random.Range(0, System.Enum.GetValues(typeof(Nationality)).Length));
-
+        profile.ExpirationDate = DateTime.Today;
     }
 
     private IEnumerator WalkToWindow()
@@ -79,19 +91,20 @@ public class Customer : MonoBehaviour, IPointerClickHandler
 
     private void SpawnDocuments()
     {
-        int randomAmount = Random.Range(1, maxDocumentsToSpawn);
-        _allDocuments = new GameObject[randomAmount];
-        for (int i = 0; i < randomAmount; i++)
+        int randomAmount = UnityEngine.Random.Range(1, maxDocumentsToSpawn);
+        Debug.Log(randomAmount.ToString());
+        _allDocuments = new Document[2];
+        for (int i = 0; i < 2; i++)
         {
             Vector3 spawnPos = new Vector3(transform.position.x + (i * _offsetBetweenDocuments), transform.position.y, transform.position.z);
-            GameObject Document = Instantiate(DocumentPrefabs[0], spawnPos, Quaternion.identity, transform);
-            Document.GetComponent<PassportDocument>().CitezenProfile = profile;
-            _allDocuments[i] = Document;
+            GameObject Document = Instantiate(DocumentPrefabs[i], spawnPos, Quaternion.identity, transform);
+            Document.GetComponent<Document>().CitezenProfile = profile;
+            _allDocuments[i] = Document.GetComponent<Document>();
         }
 
-        foreach(GameObject document in _allDocuments)
+        foreach(Document document in _allDocuments)
         {
-            document.transform.DOMoveY(transform.position.y + (Vector3.down.y * _documentYOffset), 0.5f).SetEase(Ease.OutBack);
+            document.gameObject.transform.DOMoveY(transform.position.y + (Vector3.down.y * _documentYOffset), 0.5f).SetEase(Ease.OutBack);
         }
     }
     private IEnumerator WalkAway()
@@ -101,7 +114,11 @@ public class Customer : MonoBehaviour, IPointerClickHandler
             yield return new WaitForSeconds(1);
 
             _isWalkingAway = true;
-            Vector3 targetPos = new Vector3(transform.position.x + _walkAwayDistance, transform.position.y - 4, transform.position.z);
+
+            bool canPass = _allDocuments.Any(document => document.GetEntryStatus() == EntryStatus.Aproved);
+
+            Vector3 targetPos = canPass == true ? new Vector3(transform.position.x + _walkAwayDistance, transform.position.y - 4, transform.position.z) 
+                : new Vector3(transform.position.x - _walkAwayDistance, transform.position.y - 4, transform.position.z);
 
             CollectDocuments();
 
@@ -123,7 +140,7 @@ public class Customer : MonoBehaviour, IPointerClickHandler
 
     private bool CheckForAllDocuments()
     {
-        if (_allDocuments.All(go => !go.activeSelf))
+        if (_allDocuments.All(go => !go.gameObject.activeSelf))
         {
             Debug.Log("Thanks for all docs!");
             return true;

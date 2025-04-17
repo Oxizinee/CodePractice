@@ -1,14 +1,13 @@
 {
   "dayNumber": 1,
   "rules": [
-    { "ruleType": "MustHavePassport" },
-    {
+    { "ruleType": "MustHavePassport" }//,
+   /* {
       "ruleType": "BanOnCountry",
       "targetCountry": "Czebuka"
-    }
+    } */
   ],
   "documents": [
-    "Passport",
-    "IDCard"
+    "Passport"
   ]
 }
