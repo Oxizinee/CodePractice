@@ -4,14 +4,12 @@ using UnityEngine;
 using System.IO;
 using Newtonsoft.Json;
 using System;
+using PapersPlease.Rules;
 
 public class DayManager : MonoBehaviour
 {
     public DayConfig currentDayConfig;
     public int CurrentDay = 1;
-    
-    
-
 
     void Awake()
     {
@@ -50,10 +48,9 @@ public class DayManager : MonoBehaviour
             case RuleType.MustHavePassport:
                return new MustHavePassportRule();
 
-            //case RuleType.BanOnCountry:
-            //    return new BanOnCountryRule(data.targetCountry);
+            case RuleType.BanOnCountry:
+                return new BanOnCountryRule(data.targetCountry);
 
-                // Add more cases here
         }
 
         throw new Exception($"Unknown rule type: {data.ruleType}");

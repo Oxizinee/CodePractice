@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 6690647156679195179}
   - component: {fileID: 5557512325692164975}
   - component: {fileID: 8383172904620910996}
-  m_Layer: 10
+  - component: {fileID: 6936620555903808924}
+  - component: {fileID: 7250345159697910533}
+  m_Layer: 11
   m_Name: 'PassportNumber text '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,6 +173,70 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5557512325692164975}
   m_maskType: 0
+--- !u!114 &6936620555903808924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605406422713701436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5432372cb95c7cf4aa00a7a64c28a32e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  field: 
+  value: 
+  profile:
+    Name: 
+    Nationality: 
+    Gender: 
+    PassportNumber: 
+--- !u!61 &7250345159697910533
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605406422713701436}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -3.9052734, y: 0.9521121}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10.166096, y: 2.9042237}
+  m_EdgeRadius: 0
 --- !u!1 &1192225360954451880
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,7 +315,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1242281881
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8690905309357758080
 MonoBehaviour:
@@ -354,7 +420,9 @@ GameObject:
   - component: {fileID: 501194086965518421}
   - component: {fileID: 5497589428562506915}
   - component: {fileID: 1222021148576382465}
-  m_Layer: 10
+  - component: {fileID: 7260167704284804274}
+  - component: {fileID: 4659792366014575149}
+  m_Layer: 11
   m_Name: 'ExpirationDate text '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -514,6 +582,70 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5497589428562506915}
   m_maskType: 0
+--- !u!114 &7260167704284804274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562905363604778338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5432372cb95c7cf4aa00a7a64c28a32e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  field: 
+  value: 
+  profile:
+    Name: 
+    Nationality: 
+    Gender: 
+    PassportNumber: 
+--- !u!61 &4659792366014575149
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562905363604778338}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -3.844089, y: 1.2053635}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10.406169, y: 3.410727}
+  m_EdgeRadius: 0
 --- !u!1 &2713536622308226126
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,7 +912,9 @@ GameObject:
   - component: {fileID: 2448165083459126469}
   - component: {fileID: 5631323607235482906}
   - component: {fileID: 8365128335462464269}
-  m_Layer: 10
+  - component: {fileID: 7805347283915399852}
+  - component: {fileID: 5245156167187639854}
+  m_Layer: 11
   m_Name: Name text (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -940,6 +1074,70 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5631323607235482906}
   m_maskType: 0
+--- !u!114 &7805347283915399852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3276533618001689838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5432372cb95c7cf4aa00a7a64c28a32e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  field: 
+  value: 
+  profile:
+    Name: 
+    Nationality: 
+    Gender: 
+    PassportNumber: 
+--- !u!61 &5245156167187639854
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3276533618001689838}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -3.8568616, y: 1.048937}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10.262921, y: 3.097874}
+  m_EdgeRadius: 0
 --- !u!1 &3380514827569175179
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,6 +1194,7 @@ MonoBehaviour:
     Nationality: 
     Gender: 
     PassportNumber: 
+  _inspectableFields: []
   _nameText: {fileID: 8365128335462464269}
   _nationalityText: {fileID: 7188666761953917862}
   _genderText: {fileID: 5333441777759790389}
@@ -1675,7 +1874,9 @@ GameObject:
   - component: {fileID: 2245174080188705588}
   - component: {fileID: 2790384866835800362}
   - component: {fileID: 5333441777759790389}
-  m_Layer: 10
+  - component: {fileID: 5016507915970838083}
+  - component: {fileID: 1290551369295545426}
+  m_Layer: 11
   m_Name: 'Gender text '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1835,6 +2036,70 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 2790384866835800362}
   m_maskType: 0
+--- !u!114 &5016507915970838083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6984618327189451582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5432372cb95c7cf4aa00a7a64c28a32e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  field: 
+  value: 
+  profile:
+    Name: 
+    Nationality: 
+    Gender: 
+    PassportNumber: 
+--- !u!61 &1290551369295545426
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6984618327189451582}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -3.85686, y: 1.016662}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10.262922, y: 3.033324}
+  m_EdgeRadius: 0
 --- !u!1 &7380374057995114215
 GameObject:
   m_ObjectHideFlags: 0
@@ -1846,7 +2111,9 @@ GameObject:
   - component: {fileID: 4334944139666620563}
   - component: {fileID: 4165188354844195021}
   - component: {fileID: 7188666761953917862}
-  m_Layer: 10
+  - component: {fileID: 2085335274612660328}
+  - component: {fileID: 1580219528744872949}
+  m_Layer: 11
   m_Name: Nationality text (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2006,6 +2273,70 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 4165188354844195021}
   m_maskType: 0
+--- !u!114 &2085335274612660328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7380374057995114215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5432372cb95c7cf4aa00a7a64c28a32e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  field: 
+  value: 
+  profile:
+    Name: 
+    Nationality: 
+    Gender: 
+    PassportNumber: 
+--- !u!61 &1580219528744872949
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7380374057995114215}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -3.7600355, y: 1.2425879}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10.26292, y: 2.581474}
+  m_EdgeRadius: 0
 --- !u!1 &7563791057039465833
 GameObject:
   m_ObjectHideFlags: 0

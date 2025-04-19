@@ -1,4 +1,5 @@
 using DG.Tweening;
+using PapersPlease.Inspector;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,13 +32,22 @@ public abstract class Document : MonoBehaviour, IDragHandler, IEndDragHandler
 
     private float _dragSpeed, _giveBackOffset;
     //dragging
-    private bool _isDragging, _hoveringAboveCitizen;
+   private bool _isDragging, _hoveringAboveCitizen, _isWithCitizen;
 
     //collision layers
     private int _officeLayerValue, _inspectorLayerValue, _customerLayerValue;
 
+    //Return doc
+    public delegate void OnReturnDocumentDelegate();
+
+    public OnReturnDocumentDelegate OnReturnDocument;
+
+    [SerializeField]private InspectableField[] _inspectableFields;
+
     public void Start()
     {
+       _inspectableFields = _inspectorVersion.GetComponentsInChildren<InspectableField>();
+
         if (_entryStamp != null)
         {
             _entryStamp.SetActive(false);
@@ -48,7 +58,7 @@ public abstract class Document : MonoBehaviour, IDragHandler, IEndDragHandler
         }
         _dragSpeed = 40;
         _giveBackOffset = 3;
-
+        _isWithCitizen = false;
         _officeVersion.SetActive(true);
         _inspectorVersion.SetActive(false);
 
@@ -57,15 +67,18 @@ public abstract class Document : MonoBehaviour, IDragHandler, IEndDragHandler
         _customerLayerValue = LayerMask.NameToLayer("Customer");
 
         SetTextOnDocument();
-
     }
 
-    public virtual void SetTextOnDocument() { }
-    public Document(CitizenProfile citezenProfile) 
-    { 
+
+    public virtual void SetTextOnDocument() {}
+    public virtual void SetUpCitizenProfile(CitizenProfile citezenProfile)
+    {
         CitezenProfile = citezenProfile;
     }
-
+    public bool IsReturned()
+    {
+        return _isWithCitizen;
+    }
     public void OnDrag(PointerEventData eventData)
     {
         _isDragging = true;
@@ -80,7 +93,9 @@ public abstract class Document : MonoBehaviour, IDragHandler, IEndDragHandler
         if (_hoveringAboveCitizen && _entryStatus != EntryStatus.Unset)
         {
             transform.DOMoveY(transform.position.y - _giveBackOffset, 0.5f).SetEase(Ease.Linear).OnComplete(() => gameObject.SetActive(false));
-            Debug.Log("Gave it back!");
+            _isWithCitizen = true;
+            Debug.Log($"Thanks for giving {gameObject.name} back");
+            OnReturnDocument?.Invoke();
         }
     }
     private void OnTriggerStay2D(Collider2D other)
@@ -94,13 +109,14 @@ public abstract class Document : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         if (other.gameObject.layer == _inspectorLayerValue)
         {
-            Debug.Log("In Inspector window");
+            //Debug.Log("In Inspector window");
             _inspectorVersion.SetActive(true);
             _officeVersion.SetActive(false);
+           
         }
         else if (other.gameObject.layer == _officeLayerValue)
         {
-            Debug.Log("In office window");
+           // Debug.Log("In office window");
             _inspectorVersion.SetActive(false);
             _officeVersion.SetActive(true);
         }
@@ -135,13 +151,15 @@ public abstract class Document : MonoBehaviour, IDragHandler, IEndDragHandler
 public class PassportDocument : Document
 {
     [SerializeField] private TextMeshPro _nameText, _nationalityText, _genderText, _passportNumberText, _expirationDateText;
-    public PassportDocument(CitizenProfile citezenProfile) : base(citezenProfile)
+    public override void SetUpCitizenProfile(CitizenProfile citezenProfile) 
     {
+        base.SetUpCitizenProfile(citezenProfile);
         Fields["Name"] = citezenProfile.Name;
         Fields["Nationality"] = citezenProfile.Nationality;
         Fields["Gender"] = citezenProfile.Gender;
         Fields["PassportNumber"] = citezenProfile.PassportNumber;
         Fields["ExpirationDate"] = citezenProfile.ExpirationDate.ToShortDateString();
+
     }
 
     public override void SetTextOnDocument()

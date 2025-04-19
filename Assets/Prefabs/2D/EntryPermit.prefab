@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 6690647156679195179}
   - component: {fileID: 5557512325692164975}
   - component: {fileID: 8383172904620910996}
-  m_Layer: 0
+  - component: {fileID: 1630351435934949897}
+  - component: {fileID: 7250345159697910533}
+  m_Layer: 11
   m_Name: 'PassportNumber text '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,6 +173,71 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5557512325692164975}
   m_maskType: 0
+--- !u!114 &1630351435934949897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605406422713701436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5432372cb95c7cf4aa00a7a64c28a32e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  field: 
+  value: 
+  profile:
+    Name: 
+    Nationality: 
+    Gender: 
+    PassportNumber: 
+  _documentReference: {fileID: 0}
+--- !u!61 &7250345159697910533
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605406422713701436}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -3.864184, y: 1.0659813}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10.114139, y: 3.131963}
+  m_EdgeRadius: 0
 --- !u!1 &1192225360954451880
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,7 +421,9 @@ GameObject:
   - component: {fileID: 501194086965518421}
   - component: {fileID: 5497589428562506915}
   - component: {fileID: 1222021148576382465}
-  m_Layer: 0
+  - component: {fileID: 7105402394202592250}
+  - component: {fileID: 4659792366014575149}
+  m_Layer: 11
   m_Name: 'ExpirationDate text '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -514,6 +583,71 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5497589428562506915}
   m_maskType: 0
+--- !u!114 &7105402394202592250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562905363604778338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5432372cb95c7cf4aa00a7a64c28a32e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  field: 
+  value: 
+  profile:
+    Name: 
+    Nationality: 
+    Gender: 
+    PassportNumber: 
+  _documentReference: {fileID: 0}
+--- !u!61 &4659792366014575149
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562905363604778338}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -3.9707804, y: 1.1725793}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10.16744, y: 3.3451586}
+  m_EdgeRadius: 0
 --- !u!1 &3276533618001689838
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,7 +659,9 @@ GameObject:
   - component: {fileID: 2448165083459126469}
   - component: {fileID: 5631323607235482906}
   - component: {fileID: 8365128335462464269}
-  m_Layer: 0
+  - component: {fileID: 1840220506973049029}
+  - component: {fileID: 5245156167187639854}
+  m_Layer: 11
   m_Name: Name text (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -685,6 +821,71 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5631323607235482906}
   m_maskType: 0
+--- !u!114 &1840220506973049029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3276533618001689838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5432372cb95c7cf4aa00a7a64c28a32e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  field: 
+  value: 
+  profile:
+    Name: 
+    Nationality: 
+    Gender: 
+    PassportNumber: 
+  _documentReference: {fileID: 0}
+--- !u!61 &5245156167187639854
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3276533618001689838}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -3.957458, y: 1.1459305}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10.194089, y: 3.291861}
+  m_EdgeRadius: 0
 --- !u!1 &3380514827569175179
 GameObject:
   m_ObjectHideFlags: 0
@@ -762,11 +963,13 @@ MonoBehaviour:
   DocumentType: 1
   _officeVersion: {fileID: 5932148797751507854}
   _inspectorVersion: {fileID: 8979389299287198197}
+  _entryStamp: {fileID: 0}
   CitezenProfile:
     Name: 
     Nationality: 
     Gender: 
     PassportNumber: 
+  _inspectableFields: []
   _nameText: {fileID: 8365128335462464269}
   _passportNumberText: {fileID: 8383172904620910996}
   _expirationDateText: {fileID: 1222021148576382465}
@@ -1244,7 +1447,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2220791869985577354}
   - component: {fileID: 1697577663653611585}
-  - component: {fileID: 5337169044926128306}
+  - component: {fileID: 899598941843238816}
   m_Layer: 0
   m_Name: InspectorDocument
   m_TagString: Untagged
@@ -1322,8 +1525,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &5337169044926128306
-CircleCollider2D:
+--- !u!61 &899598941843238816
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1355,5 +1558,15 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.50000006
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0

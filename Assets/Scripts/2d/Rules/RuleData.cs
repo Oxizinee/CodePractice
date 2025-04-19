@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
+namespace PapersPlease.Rules
+{
     public enum RuleType
     {
         MustHavePassport,
@@ -19,7 +22,6 @@ using System.Linq;
     {
         public RuleType ruleType;
         public abstract bool IsViolated(CitizenProfile citizen, List<Document> documents);
-        public abstract string GetViolationMessage();
     }
 
     public class MustHavePassportRule : Rule
@@ -34,8 +36,29 @@ using System.Linq;
             return documents.OfType<PassportDocument>().FirstOrDefault() == null;
         }
 
-        public override string GetViolationMessage()
+
+    }
+
+    public class BanOnCountryRule : Rule
+    {
+        public string BannedCountry;
+
+        public BanOnCountryRule(string bannedCountry)
         {
-            return "Entry denied: Passport is missing.";
+            BannedCountry = bannedCountry;
+            ruleType = RuleType.BanOnCountry;
+        }
+
+        public override bool IsViolated(CitizenProfile citizen, List<Document> documents)
+        {
+            if (citizen.Nationality == BannedCountry)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
+}
